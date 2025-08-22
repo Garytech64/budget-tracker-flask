@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Budget Tracker</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { color: #333; }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 5px 10px 20px 0;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #007BFF;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .btn:hover { background-color: #0056b3; }
+        .btn-delete { background-color: #dc3545; }
+        .btn-delete:hover { background-color: #a71d2a; }
+        .btn-populate { background-color: #28a745; }
+        .btn-populate:hover { background-color: #1e7e34; }
+
+        /* Summary */
+        .summary {
+            margin-bottom: 20px; 
+            padding: 15px; 
+            border: 1px solid #ccc; 
+            background: #f9f9f9; 
+        }
+        .summary p { margin: 5px 0; font-size: 16px; }
+        .positive { color: green; }
+        .negative { color: red; }
+
+        /* Table */
+        .table-container {
+            max-height: 300px;  /* table scroll height */
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        th { background: #eee; }
+
+        /* Charts */
+        #charts-wrapper {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        #chart-container, #chart-container-income {
+            width: 45%;
+            height: 400px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Budget Tracker</h1>
+
+    <!-- Action buttons -->
+    <a href="/add" class="btn">Add Transaction</a>
+    <a href="/populate" class="btn btn-populate">Populate Sample Data</a>
+
+    <!-- Summary -->
+    <div class="summary">
+        <p><strong>Total Income:</strong> ${{ "%.2f"|format(total_income) }}</p>
+        <p><strong>Total Expenses:</strong> ${{ "%.2f"|format(total_expenses) }}</p>
+        <p><strong>Net Balance:</strong> 
+            <span class="{% if net_balance >= 0 %}positive{% else %}negative{% endif %}">
+                ${{ "%.2f"|format(net_balance) }}
+            </span>
+        </p>
+    </div>
+
+    <!-- Transaction Table (scrollable) -->
+    <h2>All Transactions</h2>
+    <div class="table-container">
+        <table>
+            <tr>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th>Amount</th>
+                <th>Actions</th>
+            </tr>
+            {% for t in transactions %}
+            <tr>
+                <td>{{ t[4] }}</td>
+                <td>{{ t[1] }}</td>
+                <td>{{ t[2] }}</td>
+                <td>
+                    {% if t[3] >= 0 %}
+                        +${{ "%.2f"|format(t[3]) }}
+                    {% else %}
+                        -${{ "%.2f"|format(t[3]|abs) }}
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="/edit/{{ t[0] }}" class="btn">Edit</a>
+                    <a href="/delete/{{ t[0] }}" class="btn btn-delete">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <!-- Charts -->
+    <h2>Charts</h2>
+    <div id="charts-wrapper">
+        <div id="chart-container">
+            <canvas id="expenseChart"></canvas>
+        </div>
+
+        <div id="chart-container-income">
+            <canvas id="incomeExpenseChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Chart scripts -->
+    <script>
+        // Expenses by Category Pie Chart
+        const ctx = document.getElementById('expenseChart').getContext('2d');
+        const expenseChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: {{ categories | tojson }},
+                datasets: [{
+                    label: 'Expenses',
+                    data: {{ category_totals | tojson }},
+                    backgroundColor: ['#FF6384','#36A2EB','#FFCE56','#4BC0C0','#9966FF','#FF9F40','#8DFF33']
+                }]
+            },
+            options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+        });
+
+        // Income vs Expenses Doughnut Chart
+        const ctx2 = document.getElementById('incomeExpenseChart').getContext('2d');
+        const incomeExpenseChart = new Chart(ctx2, {
+            type: 'doughnut',
+            data: {
+                labels: ['Income', 'Expenses'],
+                datasets: [{
+                    label: 'Income vs Expenses',
+                    data: [{{ total_income }}, {{ total_expenses }}],
+                    backgroundColor: ['#36A2EB', '#FF6384']
+                }]
+            },
+            options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+        });
+    </script>
+</body>
+</html>

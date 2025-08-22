@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% if transaction %}Edit{% else %}Add{% endif %} Transaction</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { color: #333; }
+        form { max-width: 500px; margin: 0 auto; }
+        label { display: block; margin-top: 15px; font-weight: bold; }
+        input, select { width: 100%; padding: 8px; margin-top: 5px; border-radius: 4px; border: 1px solid #ccc; }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover { background-color: #0056b3; }
+        .btn-back {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 8px 16px;
+            font-size: 14px;
+            background-color: #6c757d;
+            color: #fff;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        .btn-back:hover { background-color: #5a6268; }
+    </style>
+</head>
+<body>
+    <h1>{% if transaction %}Edit{% else %}Add{% endif %} Transaction</h1>
+
+    <form method="post">
+        <label for="description">Description</label>
+        <input type="text" id="description" name="description" required value="{{ transaction[1] if transaction else '' }}">
+
+        <label for="category">Category</label>
+        <select id="category" name="category" required>
+            {% for cat in categories %}
+                <option value="{{ cat }}" {% if trans
