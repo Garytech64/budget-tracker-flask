@@ -8,6 +8,16 @@ venv/
 # SQLite database (optional — comment out if you want to keep it)
 budget.db
 
-# IDE settings
+# IDE settings# Virtual environment
+venv/
+
+# SQLite database
+budget.db
+
+# Python cache
+__pycache__/
+*.pyc
+
 .vscode/
 .idea/
+
