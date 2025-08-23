@@ -39,7 +39,13 @@
         <label for="description">Description</label>
         <input type="text" id="description" name="description" required value="{{ transaction[1] if transaction else '' }}">
 
-        <label for="category">Category</label>
-        <select id="category" name="category" required>
-            {% for cat in categories %}
-                <option value="{{ cat }}" {% if trans
+        <label for="category">Category:</label>
+<select id="category" name="category" required>
+    {% for cat in categories %}
+        <option value="{{ cat }}" 
+            {% if trans and cat == trans.category %} selected {% endif %}>
+            {{ cat }}
+        </option>
+    {% endfor %}
+</select>
+
