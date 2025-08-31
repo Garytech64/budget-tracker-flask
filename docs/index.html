@@ -1,118 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Budget Tracker Flask</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Budget Tracker - Screenshots</title>
   <style>
     body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f8f9fa;
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
       color: #333;
-    }
-    header {
-      background: linear-gradient(135deg, #4f46e5, #06b6d4);
-      color: white;
-      text-align: center;
-      padding: 4rem 1rem;
-    }
-    header h1 {
       margin: 0;
-      font-size: 2.5rem;
+      padding: 20px;
     }
-    header p {
-      margin-top: 0.5rem;
-      font-size: 1.2rem;
-      opacity: 0.9;
-    }
-    .container {
-      max-width: 1000px;
-      margin: 2rem auto;
-      padding: 0 1rem;
-    }
-    .section {
-      background: white;
-      border-radius: 12px;
-      padding: 2rem;
-      margin-bottom: 2rem;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    }
-    .section h2 {
-      margin-top: 0;
-      color: #4f46e5;
-    }
-    .screenshots {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1rem;
-    }
-    .screenshots img {
-      width: 100%;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      transition: transform 0.2s ease-in-out;
-    }
-    .screenshots img:hover {
-      transform: scale(1.03);
-    }
-    footer {
+    h1 {
       text-align: center;
-      padding: 2rem;
-      font-size: 0.9rem;
-      color: #555;
+      color: #2c3e50;
     }
-    footer a {
-      color: #4f46e5;
-      text-decoration: none;
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+    .card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      padding: 15px;
+      text-align: center;
+    }
+    .card img {
+      max-width: 100%;
+      border-radius: 8px;
+    }
+    .caption {
+      margin-top: 10px;
+      font-weight: bold;
+      color: #555;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Budget Tracker (Flask)</h1>
-    <p>A simple web app to manage expenses and visualize budgets.</p>
-  </header>
-
-  <div class="container">
-    <div class="section">
-      <h2>About the Project</h2>
-      <p>
-        This Flask-based Budget Tracker helps users log income and expenses,
-        store them in a SQLite database, and view interactive charts for better
-        financial planning.
-      </p>
+  <h1>Budget Tracker - Screenshots</h1>
+  <div class="gallery">
+    <div class="card">
+      <img src="screenshots/home.png" alt="Home Page">
+      <div class="caption">Home Page</div>
     </div>
-
-    <div class="section">
-      <h2>Features</h2>
-      <ul>
-        <li>Add and manage transactions</li>
-        <li>SQLite database storage</li>
-        <li>Interactive charts for spending insights</li>
-        <li>Responsive and lightweight interface</li>
-      </ul>
-    </div>
-
-    <div class="section">
-      <h2>Screenshots</h2>
-      <div class="screenshots">
-        <img src="home.png" alt="Home page screenshot" />
-        <img src="add.png" alt="Add transaction screenshot" />
-      </div>
-    </div>
-
-    <div class="section">
-      <h2>View on GitHub</h2>
-      <p>
-        Check out the source code on 
-        <a href="https://github.com/Garytech64/budget-tracker-flask" target="_blank">GitHub</a>.
-      </p>
+    <div class="card">
+      <img src="screenshots/add.png" alt="Add Transaction">
+      <div class="caption">Add Transaction</div>
     </div>
   </div>
-
-  <footer>
-    Built with ❤️ using Flask | Published with GitHub Pages
-  </footer>
 </body>
 </html>
